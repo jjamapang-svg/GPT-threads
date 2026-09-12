@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - approved_post.txt
+      - approved_image_url.txt
   workflow_dispatch:
 
 jobs:
@@ -22,4 +23,8 @@ jobs:
         run: |
           POST_TEXT="$(cat approved_post.txt)"
           export POST_TEXT
+          if [ -f approved_image_url.txt ]; then
+            POST_IMAGE_URL="$(cat approved_image_url.txt)"
+            export POST_IMAGE_URL
+          fi
           python post_threads.py
