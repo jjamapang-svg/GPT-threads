@@ -1,24 +1,23 @@
-name: Threads Approved Post
-
+name: Threads diagnostics
 on:
   workflow_dispatch:
-    inputs:
-      post_text:
-        description: "Approved Threads post (max 500 chars)"
-        required: true
-        type: string
-
+  push:
+    branches: [main]
+    paths: [post_threads.py, requirements.txt, 'tests/**', .github/workflows/threads-manual.yml]
+permissions:
+  contents: read
 jobs:
-  publish:
+  diagnose:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - name: Publish approved post
+      - run: python -m unittest discover -s tests -v
+      - name: Validate image, account, and previous published post (read only)
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-          POST_TEXT: ${{ inputs.post_text }}
-        run: python post_threads.py
+        run: python post_threads.py diagnose
