@@ -1,0 +1,25 @@
+name: Post approved Threads draft
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - approved_post.txt
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Publish approved post
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: |
+          POST_TEXT="$(cat approved_post.txt)"
+          export POST_TEXT
+          python post_threads.py
