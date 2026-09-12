@@ -55,9 +55,9 @@ class Meta:
         try:
             data = response.json()
         except ValueError:
-            log(response.text[:6000])
+            log(safe(response.text)[:6000])
             raise RuntimeError(f"{endpoint}: non-JSON response") from None
-        log(json.dumps(data, ensure_ascii=False)[:12000])
+        log(safe(json.dumps(data, ensure_ascii=False))[:12000])
         if not response.ok or not isinstance(data, dict) or "error" in data:
             raise RuntimeError(f"{endpoint}: Meta request failed (HTTP {response.status_code}); see sanitized response")
         return data

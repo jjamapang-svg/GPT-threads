@@ -1,30 +1,20 @@
 name: Post approved Threads draft
-
 on:
-  push:
-    branches: [main]
-    paths:
-      - approved_post.txt
-      - approved_image_url.txt
   workflow_dispatch:
-
+permissions:
+  contents: read
 jobs:
-  post:
+  preflight:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - name: Publish approved post
+      - run: python -m unittest discover -s tests -v
+      - name: Preflight only - live publication awaiting owner decisions
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-        run: |
-          POST_TEXT="$(cat approved_post.txt)"
-          export POST_TEXT
-          if [ -f approved_image_url.txt ]; then
-            POST_IMAGE_URL="$(cat approved_image_url.txt)"
-            export POST_IMAGE_URL
-          fi
-          python post_threads.py
+        run: python post_threads.py diagnose
