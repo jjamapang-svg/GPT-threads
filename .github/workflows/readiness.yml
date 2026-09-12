@@ -1,0 +1,23 @@
+name: Automation readiness
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [check_readiness.py, .github/workflows/readiness.yml]
+permissions:
+  contents: read
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Check configured credentials and reply access without posting
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python check_readiness.py
