@@ -1,0 +1,24 @@
+name: Threads Approved Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_text:
+        description: "Approved Threads post (max 500 chars)"
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Publish approved post
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          POST_TEXT: ${{ inputs.post_text }}
+        run: python post_threads.py
