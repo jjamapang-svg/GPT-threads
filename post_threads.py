@@ -1,24 +1,32 @@
 import os
-import sys
 import requests
 
 TOKEN = os.environ.get("THREADS_ACCESS_TOKEN")
 API = "https://graph.threads.net/v1.0"
 
 
-def publish_text(text: str):
+def publish_post(text: str, image_url: str | None = None):
     if not TOKEN:
         raise RuntimeError("THREADS_ACCESS_TOKEN is missing")
     if not text or len(text) > 500:
         raise ValueError("Post text must be 1-500 characters")
 
+    payload = {
+        "text": text,
+        "access_token": TOKEN,
+    }
+
+    if image_url:
+        payload.update({
+            "media_type": "IMAGE",
+            "image_url": image_url,
+        })
+    else:
+        payload["media_type"] = "TEXT"
+
     create = requests.post(
         f"{API}/me/threads",
-        data={
-            "media_type": "TEXT",
-            "text": text,
-            "access_token": TOKEN,
-        },
+        data=payload,
         timeout=30,
     )
     create.raise_for_status()
@@ -34,4 +42,7 @@ def publish_text(text: str):
 
 
 if __name__ == "__main__":
-    publish_text(os.environ.get("POST_TEXT", ""))
+    publish_post(
+        os.environ.get("POST_TEXT", ""),
+        os.environ.get("POST_IMAGE_URL") or None,
+    )
