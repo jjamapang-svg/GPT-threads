@@ -53,6 +53,10 @@ class AutomationSafetyTests(unittest.TestCase):
         self.assertEqual(api.call.call_args.kwargs["media_type"], "IMAGE")
         self.assertEqual(api.call.call_args.kwargs["image_url"], "https://raw.githubusercontent.com/example/image.png")
 
+    def test_manual_post_time_can_select_a_topic(self):
+        manual_time = automation.datetime(2026, 9, 14, 0, tzinfo=automation.ET)
+        self.assertIn(automation.scheduled_topic(manual_time), automation.POST_TOPICS)
+
 
 if __name__ == "__main__":
     unittest.main()

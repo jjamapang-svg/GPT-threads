@@ -285,7 +285,10 @@ def fingerprint(text):
 
 def scheduled_topic(current):
     """Keep the 50% practical / 30% funny / 20% robotics mix across ten posts."""
-    hour_index = sorted(POST_HOURS).index(current.hour)
+    hours = sorted(POST_HOURS)
+    # A manually requested --force post can run at any hour; scheduled runs use
+    # the exact 9 AM, noon, or 6 PM slot.
+    hour_index = hours.index(current.hour) if current.hour in POST_HOURS else 0
     return POST_TOPICS[(current.date().toordinal() * len(POST_HOURS) + hour_index) % len(POST_TOPICS)]
 
 
