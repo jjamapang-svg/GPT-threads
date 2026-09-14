@@ -149,6 +149,7 @@ class Writer:
             raise RuntimeError("OPENAI_API_KEY is missing")
         self.headers = {"Authorization": "Bearer " + key, "Content-Type": "application/json"}
         self.model = os.environ.get("OPENAI_MODEL", "gpt-5.6-terra")
+        self.reasoning_effort = os.environ.get("OPENAI_REASONING_EFFORT", "medium")
 
     def text(self, instructions, prompt, limit):
         body = {
@@ -156,6 +157,7 @@ class Writer:
             "instructions": instructions,
             "input": prompt,
             "max_output_tokens": 450,
+            "reasoning": {"effort": self.reasoning_effort},
             "text": {"verbosity": "low"},
             "store": False,
         }
