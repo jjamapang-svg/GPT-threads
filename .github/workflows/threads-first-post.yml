@@ -1,0 +1,31 @@
+name: Publish first automated Threads post
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/trigger-first-post]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threads-kim031476
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Generate and publish one verified image post
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.6-terra
+          OPENAI_REASONING_EFFORT: medium
+        run: python threads_automation.py post --force
