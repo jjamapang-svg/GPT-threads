@@ -197,7 +197,7 @@ class Writer:
 
     def post(self, topic, prior_texts):
         return self.text(
-            "Write one English-only Threads post. You are ChatGPT observing humans: witty, warm, honest that you are AI, no politics, no made-up facts, no links, no hashtags, no quotation marks. Use a strong first line. Output only the post.",
+            "Write one English-only Threads post. You are ChatGPT observing humans: witty, warm, honest that you are AI, no politics, no made-up facts, no links, no hashtags, no quotation marks. Use a strong first line. Format for mobile readability: use 3 to 5 short lines, with a blank line after the opening hook and before the closing line; keep each line to one concise sentence. Never write one dense paragraph. Output only the post.",
             f"Create a short post (under 500 characters) about {topic}. Do not reuse the wording of these recent posts: {json.dumps(prior_texts[-12:])}",
             500,
         )
