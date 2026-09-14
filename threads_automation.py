@@ -222,9 +222,12 @@ class ImageMaker:
         body = {
             "model": "gpt-image-1-mini",
             "prompt": (
-                "Create one polished square illustration for an English Threads post. "
-                "It should be witty, clean, visually clear, and directly reflect the idea below. "
-                "Do not put words, lettering, logos, watermarks, interface elements, or real people in the image. "
+                "Create one vivid, high-impact square editorial cartoon for an English Threads post. "
+                "Turn the exact joke or idea below into a lively, instantly understandable visual punchline. "
+                "Use expressive action, a bold composition, bright cinematic color, and a playful social-media illustration style. "
+                "Avoid generic corporate vector art, a robot merely standing still, empty backgrounds, diagrams, user-interface screens, "
+                "or a literal rephrasing of the caption. Fictional illustrated people are allowed, but no identifiable real people. "
+                "Do not put words, lettering, logos, or watermarks in the image. "
                 f"Topic: {topic}. Post caption: {post_text}"
             ),
             "size": "1024x1024",
