@@ -1,51 +1,35 @@
-# Threads posting for @kim031476
+# Threads automation for @kim031476
 
-This repository runs in GitHub Actions. The laptop does not need to stay on after a workflow starts.
+This repository runs independently in GitHub Actions. It controls only the `kim031476` Threads account.
 
-## Verified on 2026-09-12
+## Active automation
 
-- The existing token belongs to `kim031476` (user ID `38433404592940606`).
-- The earlier text post exists: https://www.threads.com/@kim031476/post/DdLEPAUFUqj
-- The original `public/tiangong.jpg` lacked its JPEG end-of-image marker (`FF D9`). Its header and `Image.verify()` passed, but full pixel decoding failed. Restoring the missing two-byte marker fixes decoding without changing the compressed image data.
-- GitHub serves the repaired JPEG as HTTP 200, `image/jpeg`, 7,493 bytes, 384 x 384.
-- The historical HTTP 500 log does not contain Meta's error response, so the missing JPEG marker is a confirmed defect and likely cause, not proof of the historical Meta-side cause.
-- New diagnostics verify identity and retrieve the old post successfully. No image post has yet been published by the repaired implementation.
+- `Scheduled Threads posts`: creates one English post at 9am, noon, and 6pm in America/New_York. The workflow is scheduled at both possible UTC hours and the Python program selects the correct one, so daylight saving time does not shift the posting time.
+- `Threads reply automation`: checks every hour and replies to every new eligible comment. It does not impose a reply-count limit. It skips its own comments and obvious promotional/scam messages, and records every handled reply ID so it cannot reply twice.
+- `Automation readiness`: makes only read-only checks for the account, recent posts, reply access, and the OpenAI API key.
 
-## Test and diagnose
+Both automations use `automation_state.json`. Before a Threads container or publish call, the workflow commits and pushes its state. That reservation, together with GitHub Actions concurrency, prevents duplicate posting if a job is retried or two schedules overlap. Logs redact access tokens and API keys.
 
-1. Open Actions > Threads diagnostics > Run workflow > main.
-2. The job runs 10 safety tests, validates the complete image, checks `GET /me`, lists existing posts, and verifies the earlier published ID and permalink.
-3. A failure remains a failed GitHub job and prints sanitized endpoint, status, and response details. Tokens are never intentionally printed.
+## Required GitHub secrets
 
-Locally, install `requirements.txt`, then run:
+Open the repository’s **Settings → Secrets and variables → Actions** and verify these secrets exist:
 
-```sh
-python -m unittest discover -s tests -v
-python post_threads.py validate
-```
+- `THREADS_ACCESS_TOKEN` — must belong to `kim031476` and have `threads_basic`, `threads_content_publish`, `threads_read_replies`, and `threads_manage_replies`.
+- `OPENAI_API_KEY` — billed OpenAI API key for writing posts and replies. A ChatGPT subscription alone is not an API key.
 
-`validate` needs no token and does not publish. `diagnose` uses `THREADS_ACCESS_TOKEN` and makes only GET calls to Meta. The no-argument script defaults to validation, so the old workflows cannot accidentally publish while deployment is being completed.
+The workflows have `contents: write` because they must persist `automation_state.json`. Do not remove that permission.
 
-## Publishing safeguards implemented in Python
+## First verification
 
-Live publishing is restricted to GitHub Actions and requires an exact approval in `publish_approval.json`: `status`, `account`, `draft_sha256`, and `image_sha256`. The hashes are printed by validation. Text and URL come from the existing approved files; the image bytes must also match the approval.
+1. In GitHub Actions, run **Automation readiness**. It must finish green before live automation is trusted.
+2. Run **Scheduled Threads posts** and leave “Post now” unchecked. Outside a scheduled Eastern Time hour it safely exits without posting.
+3. To publish one intentional first automated test post, run **Scheduled Threads posts** with “Post now” checked. The action prints a verified permalink.
+4. Then run **Threads reply automation** once. It reads and responds only to new eligible replies; it never reuses an already-recorded reply ID.
 
-A version-1 `posted_history.json` stores a map named `posts`, keyed by draft hash. Before creating a container, the publisher commits and pushes a reservation. Before publication, it pushes a `publishing` record. It records the published ID before verifying the object's account, caption, image type, and permalink. Failed state persistence stops the next API mutation. A reserved or ambiguous attempt blocks retries; it does not blindly create another post. A known published ID can be verified again without reposting.
+## Images
 
-A serialized manual workflow and repository write permission are still required to activate this path. They are awaiting owner confirmation. Do not invoke `publish` using the old workflow, do not delete ambiguous history records just to retry, and do not enable scheduled posts yet.
+The earlier approved-image publisher remains in `post_threads.py` for manual image posts. Scheduled post generation currently publishes text while it establishes a stable publishing and reply loop. Automatic image generation also needs a public image host that Meta can fetch; generated image bytes cannot be handed directly to the Threads API. Do not replace the verified posting path with an unhosted local image.
 
-## Recovery
+## Existing manual diagnostic
 
-- If image validation or account verification fails, no container was created.
-- If a reservation exists without a container ID, inspect the sanitized API response. Container creation alone is not publication, but do not clear the reservation without checking the workflow and account.
-- If a container ID exists, query its `status,error_message`. A `publishing` state can mean the publish request succeeded even when the HTTP response was lost. Reconcile using the account's posts and the container status; never blindly resend `threads_publish`.
-- If a publish ID exists, verify it and update the state; never recreate it merely because verification temporarily failed.
-- Existing text exactly matching a draft blocks another post even if the earlier post had no image. The owner must choose how to handle the existing post first.
-
-## API references
-
-Meta's official collection documents image containers with a public `image_url`, followed by publication, container status checks, and media retrieval:
-https://www.postman.com/meta/threads/documentation/dht3nzz/threads-api
-https://developers.facebook.com/docs/threads/posts
-
-No three-times-daily schedule or automatic replies are enabled. Approval for recurring publishing and additional reply permissions remain separate future steps.
+`post_threads.py diagnose` remains read-only and verifies the known account and earlier post. It is separate from the scheduled automation.

@@ -1,24 +1,33 @@
-name: Automation readiness
+name: Threads reply automation
+
 on:
+  schedule:
+    - cron: '17 * * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [threads_automation.py, automation_state.json, .github/workflows/readiness.yml]
+
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: threads-kim031476
+  cancel-in-progress: false
+
 jobs:
-  readiness:
+  reply:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
       - run: python -m unittest discover -s tests -v
-      - name: Check configured credentials and reply access without posting
+      - name: Reply to all new eligible comments
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python threads_automation.py readiness
+          OPENAI_MODEL: gpt-5.6-terra
+        run: python threads_automation.py replies
