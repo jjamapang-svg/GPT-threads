@@ -303,12 +303,12 @@ def main():
     else:
         api = Meta()
         user_id = api.identity()
-        api.posts(user_id)
-        Writer()
-        log("Posting prerequisites are configured")
-        for post in api.posts(user_id)[:1]:
+        posts = api.posts(user_id)
+        for post in posts[:1]:
             api.replies(str(post["id"]))
         log("Reply-read prerequisites are configured")
+        Writer()
+        log("Posting and writing prerequisites are configured")
 
 
 if __name__ == "__main__":
