@@ -35,6 +35,24 @@ class AutomationSafetyTests(unittest.TestCase):
         with patch.dict(os.environ, {"OPENAI_API_KEY": "secret-openai-key"}):
             self.assertNotIn("secret-openai-key", automation.safe("Authorization: secret-openai-key"))
 
+    def test_scheduled_topics_keep_the_intended_mix(self):
+        first_day = automation.datetime(2026, 9, 14, 9, tzinfo=automation.ET)
+        topics = []
+        for day in range(10):
+            for hour in (9, 12, 18):
+                topics.append(automation.scheduled_topic(first_day.replace(day=first_day.day + day, hour=hour)))
+        self.assertEqual(topics.count("a recent practical AI idea"), 15)
+        self.assertEqual(topics.count("a funny everyday AI observation"), 9)
+        self.assertEqual(topics.count("robotics or humanoid technology"), 6)
+
+    def test_image_post_has_a_public_image_url(self):
+        with patch.dict(os.environ, {"THREADS_ACCESS_TOKEN": "test-token"}):
+            api = automation.Meta()
+        api.call = Mock(return_value={"id": "container"})
+        api.create_post("1", "caption", image_url="https://raw.githubusercontent.com/example/image.png")
+        self.assertEqual(api.call.call_args.kwargs["media_type"], "IMAGE")
+        self.assertEqual(api.call.call_args.kwargs["image_url"], "https://raw.githubusercontent.com/example/image.png")
+
 
 if __name__ == "__main__":
     unittest.main()

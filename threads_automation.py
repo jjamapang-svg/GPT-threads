@@ -1,5 +1,6 @@
 """Scheduled posting and reply automation for the @kim031476 Threads account."""
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -16,9 +17,23 @@ import requests
 API = "https://graph.threads.net/v1.0"
 ACCOUNT = "kim031476"
 STATE = Path("automation_state.json")
+MEDIA_DIR = Path("automation_media")
+RAW_MEDIA_BASE = "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/"
 POST_FIELDS = "id,text,username,permalink,timestamp,media_type"
 ET = ZoneInfo("America/New_York")
 POST_HOURS = {9, 12, 18}
+POST_TOPICS = (
+    "a recent practical AI idea",
+    "a funny everyday AI observation",
+    "a recent practical AI idea",
+    "robotics or humanoid technology",
+    "a recent practical AI idea",
+    "a funny everyday AI observation",
+    "a recent practical AI idea",
+    "a funny everyday AI observation",
+    "a recent practical AI idea",
+    "robotics or humanoid technology",
+)
 
 
 def safe(value):
@@ -111,8 +126,12 @@ class Meta:
         fields = "id,text,username,timestamp,root_post,replied_to"
         return self.call("GET", f"/{post_id}/replies", fields=fields, limit=100).get("data", [])
 
-    def create_text(self, user_id, text, reply_to_id=None):
-        params = {"media_type": "TEXT", "text": text}
+    def create_post(self, user_id, text, reply_to_id=None, image_url=None):
+        if reply_to_id and image_url:
+            raise RuntimeError("Replies must remain text-only")
+        params = {"media_type": "IMAGE" if image_url else "TEXT", "text": text}
+        if image_url:
+            params["image_url"] = image_url
         if reply_to_id:
             params["reply_to_id"] = reply_to_id
         else:
@@ -191,8 +210,83 @@ class Writer:
         )
 
 
+class ImageMaker:
+    """Generate a small, public PNG that Meta can fetch for an image post."""
+    def __init__(self):
+        key = os.environ.get("OPENAI_API_KEY", "").strip()
+        if not key:
+            raise RuntimeError("OPENAI_API_KEY is missing")
+        self.headers = {"Authorization": "Bearer " + key, "Content-Type": "application/json"}
+
+    def generate(self, topic, post_text):
+        body = {
+            "model": "gpt-image-1-mini",
+            "prompt": (
+                "Create one polished square illustration for an English Threads post. "
+                "It should be witty, clean, visually clear, and directly reflect the idea below. "
+                "Do not put words, lettering, logos, watermarks, interface elements, or real people in the image. "
+                f"Topic: {topic}. Post caption: {post_text}"
+            ),
+            "size": "1024x1024",
+            "quality": "medium",
+            "output_format": "png",
+        }
+        try:
+            response = requests.post("https://api.openai.com/v1/images/generations", headers=self.headers, json=body, timeout=(10, 120))
+        except requests.RequestException as error:
+            raise RuntimeError(f"OpenAI image transport failure ({type(error).__name__})") from None
+        if not response.ok:
+            raise RuntimeError(f"OpenAI image response failed with HTTP {response.status_code}")
+        try:
+            encoded = response.json()["data"][0]["b64_json"]
+            image = base64.b64decode(encoded, validate=True)
+        except (KeyError, IndexError, TypeError, ValueError) as error:
+            raise RuntimeError("OpenAI returned an invalid image payload") from error
+        if not image.startswith(b"\x89PNG\r\n\x1a\n"):
+            raise RuntimeError("OpenAI did not return a PNG image")
+        return image
+
+
+def publish_generated_image(slot, key, image):
+    """Commit image before Meta sees it so the raw GitHub URL is publicly fetchable."""
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        raise RuntimeError("Generated images can only be published from GitHub Actions")
+    filename = f"{slot}-{key[:12]}.png"
+    path = MEDIA_DIR / filename
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(image)
+    commands = [
+        ["git", "config", "user.name", "Threads automation"],
+        ["git", "config", "user.email", "threads-automation@users.noreply.github.com"],
+        ["git", "add", str(path)],
+        ["git", "commit", "-m", "Add generated Threads image [skip ci]"],
+        ["git", "push", "origin", "HEAD:main"],
+    ]
+    for command in commands:
+        result = subprocess.run(command, capture_output=True, text=True)
+        if result.returncode:
+            raise RuntimeError(f"Could not publish generated image ({command[1]}); Threads post stopped")
+    image_url = RAW_MEDIA_BASE + path.as_posix()
+    for attempt in range(6):
+        try:
+            response = requests.get(image_url, timeout=(10, 30))
+            if response.ok and response.headers.get("Content-Type", "").lower().startswith("image/"):
+                return image_url
+        except requests.RequestException:
+            pass
+        if attempt < 5:
+            time.sleep(5)
+    raise RuntimeError("Generated image was not publicly available; Threads post stopped")
+
+
 def fingerprint(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def scheduled_topic(current):
+    """Keep the 50% practical / 30% funny / 20% robotics mix across ten posts."""
+    hour_index = sorted(POST_HOURS).index(current.hour)
+    return POST_TOPICS[(current.date().toordinal() * len(POST_HOURS) + hour_index) % len(POST_TOPICS)]
 
 
 def obvious_spam(text):
@@ -207,7 +301,7 @@ def publish_text(api, user_id, state, text, record_key, bucket):
         raise RuntimeError("Existing automation record blocks a duplicate attempt")
     records[record_key] = {"status": "reserved", "text_sha256": fingerprint(text), "created_at": datetime.now(timezone.utc).isoformat()}
     save_state(state, "reserve")
-    container_id = api.create_text(user_id, text, records[record_key].get("reply_to_id"))
+    container_id = api.create_post(user_id, text, records[record_key].get("reply_to_id"))
     records[record_key].update(status="container_created", container_id=container_id)
     save_state(state, "container")
     records[record_key]["status"] = "publishing"
@@ -235,15 +329,17 @@ def run_post(force=False):
     user_id = api.identity()
     existing = api.posts(user_id)
     writer = Writer()
-    topics = ("a recent practical AI idea", "a funny everyday AI observation", "robotics or humanoid technology")
-    text = writer.post(topics[current.hour % len(topics)], [post.get("text", "") for post in existing])
+    topic = scheduled_topic(current)
+    text = writer.post(topic, [post.get("text", "") for post in existing])
     if any(post.get("text", "").strip() == text for post in existing):
         raise RuntimeError("Generated text already exists on Threads; posting stopped")
     key = fingerprint(text)
+    image = ImageMaker().generate(topic, text)
+    image_url = publish_generated_image(slot, key, image)
     state["scheduled_slots"][slot] = {"status": "reserved", "text_sha256": key}
-    state["posts"][key] = {"status": "reserved", "text_sha256": key, "created_at": datetime.now(timezone.utc).isoformat()}
+    state["posts"][key] = {"status": "reserved", "text_sha256": key, "image_url": image_url, "created_at": datetime.now(timezone.utc).isoformat()}
     save_state(state, "post reservation")
-    container_id = api.create_text(user_id, text)
+    container_id = api.create_post(user_id, text, image_url=image_url)
     state["posts"][key].update(status="container_created", container_id=container_id)
     save_state(state, "post container")
     state["posts"][key]["status"] = "publishing"
@@ -279,7 +375,7 @@ def run_replies():
             text = writer.reply(comment)
             state["replies"][reply_id] = {"status": "reserved", "reply_to_id": reply_id, "text_sha256": fingerprint(text), "created_at": datetime.now(timezone.utc).isoformat()}
             save_state(state, "reply reservation")
-            container_id = api.create_text(user_id, text, reply_id)
+            container_id = api.create_post(user_id, text, reply_id)
             state["replies"][reply_id].update(status="container_created", container_id=container_id)
             save_state(state, "reply container")
             state["replies"][reply_id]["status"] = "publishing"
