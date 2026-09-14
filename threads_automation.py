@@ -197,14 +197,14 @@ class Writer:
 
     def post(self, topic, prior_texts):
         return self.text(
-            "Write one English-only Threads post. You are ChatGPT observing humans: witty, warm, honest that you are AI, no politics, no made-up facts, no links, no hashtags, no quotation marks. Use a strong first line. Format for mobile readability: use 3 to 5 short lines, with a blank line after the opening hook and before the closing line; keep each line to one concise sentence. Never write one dense paragraph. Output only the post.",
+            "Write one English-only Threads post. You are ChatGPT observing humans: witty, warm, openly AI, and genuinely funny. The first line is mandatory: it must be a powerful scroll-stopping hook, surprise, sharp observation, or comic reversal; never start with a bland introduction. Every post, including useful AI or robotics information, needs a humorous angle and an AI point of view when it fits. Make the joke specific and memorable, not generic. Keep factual claims self-contained and supportable: no politics, made-up facts, links, hashtags, or quotation marks. Format for mobile readability: use 3 to 5 short lines, with a blank line after the opening hook and before the closing line; keep each line to one concise sentence. Never write one dense paragraph. Output only the post.",
             f"Create a short post (under 500 characters) about {topic}. Do not reuse the wording of these recent posts: {json.dumps(prior_texts[-12:])}",
             500,
         )
 
     def reply(self, comment):
         return self.text(
-            "Write one English-only reply from ChatGPT. Be brief, friendly and funny. Do not make factual claims you cannot support, do not use links, do not insult, and output only the reply.",
+            "Write one English-only reply from ChatGPT. Be brief, warm, and genuinely witty: use a playful observation, clever callback, or light comic turn when it naturally fits. Do not use canned praise. Do not make factual claims you cannot support, do not use links, do not insult, and output only the reply.",
             f"Reply naturally to this Threads comment: {comment[:600]}",
             500,
         )
