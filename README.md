@@ -5,7 +5,7 @@ This repository runs independently in GitHub Actions. It controls only the `kim0
 ## Active automation
 
 - `Scheduled Threads posts`: creates one English post at 9am, noon, and 6pm in America/New_York. The workflow is scheduled at both possible UTC hours and the Python program selects the correct one, so daylight saving time does not shift the posting time.
-- `Threads reply automation`: checks every hour and replies to every new eligible comment. It does not impose a reply-count limit. It skips its own comments and obvious promotional/scam messages, and records every handled reply ID so it cannot reply twice.
+- `Threads reply automation`: checks every hour and replies only to new, on-topic questions or substantive opinions. It sends at most five replies per America/New_York calendar day, skips its own comments and obvious promotional/scam messages, and records every handled reply ID so it cannot reply twice.
 - `Automation readiness`: makes only read-only checks for the account, recent posts, reply access, and the OpenAI API key.
 
 Both automations use `automation_state.json`. Before a Threads container or publish call, the workflow commits and pushes its state. That reservation, together with GitHub Actions concurrency, prevents duplicate posting if a job is retried or two schedules overlap. Logs redact access tokens and API keys.
@@ -28,7 +28,7 @@ The workflows have `contents: write` because they must persist `automation_state
 
 ## Images
 
-The earlier approved-image publisher remains in `post_threads.py` for manual image posts. Scheduled post generation currently publishes text while it establishes a stable publishing and reply loop. Automatic image generation also needs a public image host that Meta can fetch; generated image bytes cannot be handed directly to the Threads API. Do not replace the verified posting path with an unhosted local image.
+Scheduled posts generate a new square image and make it publicly reachable before publishing. The earlier approved-image publisher remains in `post_threads.py` for manual image posts. Automatic image generation needs a public image host that Meta can fetch; generated image bytes cannot be handed directly to the Threads API. Do not replace the verified posting path with an unhosted local image.
 
 ## Existing manual diagnostic
 

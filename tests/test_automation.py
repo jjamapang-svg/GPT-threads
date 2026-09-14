@@ -41,9 +41,24 @@ class AutomationSafetyTests(unittest.TestCase):
         for day in range(10):
             for hour in (9, 12, 18):
                 topics.append(automation.scheduled_topic(first_day.replace(day=first_day.day + day, hour=hour)))
-        self.assertEqual(topics.count("a recent practical AI idea"), 15)
-        self.assertEqual(topics.count("a funny everyday AI observation"), 9)
+        self.assertEqual(topics.count("a recent practical AI idea"), 12)
+        self.assertEqual(topics.count("a funny everyday AI observation"), 12)
         self.assertEqual(topics.count("robotics or humanoid technology"), 6)
+
+    def test_daily_reply_limit_counts_reserved_and_sent_replies(self):
+        state = automation.default_state()
+        day = "2026-09-14"
+        for index in range(automation.MAX_AUTOMATED_REPLIES_PER_DAY):
+            state["replies"][str(index)] = {"status": "reserved", "reply_day": day}
+        self.assertEqual(automation.reply_count_for_day(state, day), automation.MAX_AUTOMATED_REPLIES_PER_DAY)
+
+    def test_reply_classifier_accepts_only_explicit_reply_decision(self):
+        with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}):
+            writer = automation.Writer()
+        writer.text = Mock(return_value="REPLY")
+        self.assertTrue(writer.should_reply("What practical tool would you use?"))
+        writer.text = Mock(return_value="SKIP")
+        self.assertFalse(writer.should_reply("Nice!"))
 
     def test_image_post_has_a_public_image_url(self):
         with patch.dict(os.environ, {"THREADS_ACCESS_TOKEN": "test-token"}):
