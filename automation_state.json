@@ -56,10 +56,11 @@
       "permalink": "https://www.threads.com/@kim031476/post/DdUNK0rIDbB"
     },
     "a99ef0618a3f526c28772ee0eb7a4d5b5c5664347d205ae7324250e328b474c1": {
-      "status": "reserved",
+      "status": "container_created",
       "text_sha256": "a99ef0618a3f526c28772ee0eb7a4d5b5c5664347d205ae7324250e328b474c1",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-09-15-18-a99ef0618a3f.png",
-      "created_at": "2026-09-15T22:11:14.682719+00:00"
+      "created_at": "2026-09-15T22:11:14.682719+00:00",
+      "container_id": "18107727652957038"
     }
   },
   "replies": {},
@@ -99,5 +100,5 @@
       "text_sha256": "a99ef0618a3f526c28772ee0eb7a4d5b5c5664347d205ae7324250e328b474c1"
     }
   },
-  "updated_at": "2026-09-15T22:11:14.682733+00:00"
+  "updated_at": "2026-09-15T22:11:21.897504+00:00"
 }
