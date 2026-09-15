@@ -2,9 +2,10 @@ name: Scheduled Threads posts
 
 on:
   schedule:
-    # Candidate runs cover DST for 9am, 1pm, and 6pm America/New_York.
-    # The Python command below only publishes at those exact local hours.
-    - cron: '0 13,14,17,18,22,23 * * *'
+    # GitHub cron uses UTC. These are 9am, 1pm, and 6pm America/New_York
+    # during Eastern Daylight Time. Each scheduled run force-publishes exactly
+    # one post, avoiding false "No post due" skips caused by delayed cron starts.
+    - cron: '0 13,17,22 * * *'
   workflow_dispatch:
     inputs:
       force:
@@ -41,8 +42,8 @@ jobs:
           OPENAI_REASONING_EFFORT: medium
           FORCE_POST: ${{ inputs.force }}
         run: |
-          if [ "$FORCE_POST" = "true" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "$FORCE_POST" = "true" ]; then
             python threads_automation.py post --force
           else
-            python -c "import threads_automation as t; t.POST_HOURS={9,13,18}; t.run_post(False)"
+            echo "Manual run requested without force; no post published."
           fi
