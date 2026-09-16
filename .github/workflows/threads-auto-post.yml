@@ -43,7 +43,7 @@ jobs:
           FORCE_POST: ${{ inputs.force }}
         run: |
           if [ "${{ github.event_name }}" = "schedule" ] || [ "$FORCE_POST" = "true" ]; then
-            python threads_automation.py post --force
+            python us_audience_strategy.py post --force
           else
             echo "Manual run requested without force; no post published."
           fi
