@@ -218,7 +218,12 @@
       "permalink": "https://www.threads.com/@kim031476/post/Ddjqc_Hmm7N"
     }
   },
-  "replies": {},
+  "replies": {
+    "18108871253232420": {
+      "status": "skipped",
+      "created_at": "2026-09-21T18:30:19.630935+00:00"
+    }
+  },
   "scheduled_slots": {
     "2026-09-14-0": {
       "status": "posted",
@@ -341,5 +346,5 @@
       "permalink": "https://www.threads.com/@kim031476/post/Ddjqc_Hmm7N"
     }
   },
-  "updated_at": "2026-09-21T17:09:39.840139+00:00"
+  "updated_at": "2026-09-21T18:30:19.630950+00:00"
 }
