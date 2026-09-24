@@ -303,6 +303,13 @@
     "18108871253232420": {
       "status": "skipped",
       "created_at": "2026-09-21T18:30:19.630935+00:00"
+    },
+    "18391192924201547": {
+      "status": "reserved",
+      "reply_to_id": "18391192924201547",
+      "reply_day": "2026-09-24",
+      "text_sha256": "de8a6632ffc7630483624b4a258ee3ca065e01f024d3aa6304d11c61b6323ee7",
+      "created_at": "2026-09-24T19:28:06.826887+00:00"
     }
   },
   "scheduled_slots": {
@@ -472,5 +479,5 @@
       "permalink": "https://www.threads.com/@kim031476/post/DdrY9SZmP_6"
     }
   },
-  "updated_at": "2026-09-24T17:10:45.052643+00:00"
+  "updated_at": "2026-09-24T19:28:06.826904+00:00"
 }
