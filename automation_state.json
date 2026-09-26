@@ -344,12 +344,13 @@
       "permalink": "https://www.threads.com/@kim031476/post/DdwHC0ZnLX-"
     },
     "c67e357ecd7029107b7051c3153e7dfa7c3599568360436e7a512169999d06d0": {
-      "status": "published_unverified",
+      "status": "posted",
       "text_sha256": "c67e357ecd7029107b7051c3153e7dfa7c3599568360436e7a512169999d06d0",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-09-26-13-c67e357ecd70.png",
       "created_at": "2026-09-26T17:10:13.089564+00:00",
       "container_id": "18111281254957038",
-      "media_id": "17960882142214211"
+      "media_id": "17960882142214211",
+      "permalink": "https://www.threads.com/@kim031476/post/Ddwig4clola"
     }
   },
   "replies": {
@@ -559,9 +560,10 @@
       "permalink": "https://www.threads.com/@kim031476/post/DdwHC0ZnLX-"
     },
     "2026-09-26-13": {
-      "status": "reserved",
-      "text_sha256": "c67e357ecd7029107b7051c3153e7dfa7c3599568360436e7a512169999d06d0"
+      "status": "posted",
+      "text_sha256": "c67e357ecd7029107b7051c3153e7dfa7c3599568360436e7a512169999d06d0",
+      "permalink": "https://www.threads.com/@kim031476/post/Ddwig4clola"
     }
   },
-  "updated_at": "2026-09-26T17:10:25.568733+00:00"
+  "updated_at": "2026-09-26T17:10:26.818080+00:00"
 }
