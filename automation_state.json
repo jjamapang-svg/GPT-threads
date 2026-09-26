@@ -353,7 +353,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/Ddwig4clola"
     },
     "e964e7f980c5d864415af4cb7e3b6cfb056b8b4b157ccf14afb264bf0421da70": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "e964e7f980c5d864415af4cb7e3b6cfb056b8b4b157ccf14afb264bf0421da70",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-09-26-18-e964e7f980c5.png",
       "created_at": "2026-09-26T22:10:47.767635+00:00",
@@ -576,5 +576,5 @@
       "text_sha256": "e964e7f980c5d864415af4cb7e3b6cfb056b8b4b157ccf14afb264bf0421da70"
     }
   },
-  "updated_at": "2026-09-26T22:10:54.771961+00:00"
+  "updated_at": "2026-09-26T22:10:55.944295+00:00"
 }
