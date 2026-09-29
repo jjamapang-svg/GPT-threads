@@ -424,11 +424,12 @@
       "media_id": "17889523152618132"
     },
     "ba31fe8f1483ec6225f0b5a70a9c75c132d9ef83ec15deb17587a5c2e05ca665": {
-      "status": "publishing",
+      "status": "published_unverified",
       "text_sha256": "ba31fe8f1483ec6225f0b5a70a9c75c132d9ef83ec15deb17587a5c2e05ca665",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-09-29-13-ba31fe8f1483.png",
       "created_at": "2026-09-29T17:10:58.834416+00:00",
-      "container_id": "18112315678957038"
+      "container_id": "18112315678957038",
+      "media_id": "18107183621205080"
     }
   },
   "replies": {
@@ -695,5 +696,5 @@
       "text_sha256": "ba31fe8f1483ec6225f0b5a70a9c75c132d9ef83ec15deb17587a5c2e05ca665"
     }
   },
-  "updated_at": "2026-09-29T17:11:06.500177+00:00"
+  "updated_at": "2026-09-29T17:11:12.007030+00:00"
 }
