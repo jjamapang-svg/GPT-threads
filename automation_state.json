@@ -548,10 +548,11 @@
       "permalink": "https://www.threads.com/@kim031476/post/DeFQ_7_mmWN"
     },
     "b8a94bd97e1ac34142a3cf28a17722cc54b33c197d2ab09a46aeae7a78af48d7": {
-      "status": "reserved",
+      "status": "container_created",
       "text_sha256": "b8a94bd97e1ac34142a3cf28a17722cc54b33c197d2ab09a46aeae7a78af48d7",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-04-20-b8a94bd97e1a.png",
-      "created_at": "2026-10-05T00:28:09.349795+00:00"
+      "created_at": "2026-10-05T00:28:09.349795+00:00",
+      "container_id": "18113800987957038"
     }
   },
   "replies": {
@@ -887,5 +888,5 @@
       "text_sha256": "b8a94bd97e1ac34142a3cf28a17722cc54b33c197d2ab09a46aeae7a78af48d7"
     }
   },
-  "updated_at": "2026-10-05T00:28:09.349818+00:00"
+  "updated_at": "2026-10-05T00:28:15.998363+00:00"
 }
