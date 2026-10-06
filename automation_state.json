@@ -557,7 +557,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/DeF6_WAm_NH"
     },
     "78694ca95d1e492eccf35c0161d607d70dad85dd22f77554e79a1c6880eff19d": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "78694ca95d1e492eccf35c0161d607d70dad85dd22f77554e79a1c6880eff19d",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-05-22-78694ca95d1e.png",
       "created_at": "2026-10-06T02:05:52.235804+00:00",
@@ -902,5 +902,5 @@
       "text_sha256": "78694ca95d1e492eccf35c0161d607d70dad85dd22f77554e79a1c6880eff19d"
     }
   },
-  "updated_at": "2026-10-06T02:05:57.476984+00:00"
+  "updated_at": "2026-10-06T02:05:58.448207+00:00"
 }
