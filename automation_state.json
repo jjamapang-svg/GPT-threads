@@ -665,7 +665,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/DeXPj_jlagF"
     },
     "ceabca3d47a89ec7a8f0bbb2e4866740bb498d8a99d55d9933915f661889d737": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "ceabca3d47a89ec7a8f0bbb2e4866740bb498d8a99d55d9933915f661889d737",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-11-21-ceabca3d47a8.png",
       "created_at": "2026-10-12T01:02:11.766493+00:00",
@@ -1070,5 +1070,5 @@
       "text_sha256": "ceabca3d47a89ec7a8f0bbb2e4866740bb498d8a99d55d9933915f661889d737"
     }
   },
-  "updated_at": "2026-10-12T01:02:17.682523+00:00"
+  "updated_at": "2026-10-12T01:02:18.740028+00:00"
 }
