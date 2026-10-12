@@ -674,10 +674,11 @@
       "permalink": "https://www.threads.com/@kim031476/post/DeYAc1_kTKK"
     },
     "ee6a10ec342569893050bc673de2eb48b2f92d250ce12ed98b7f88a0cd5ead3d": {
-      "status": "reserved",
+      "status": "container_created",
       "text_sha256": "ee6a10ec342569893050bc673de2eb48b2f92d250ce12ed98b7f88a0cd5ead3d",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-12-17-ee6a10ec3425.png",
-      "created_at": "2026-10-12T21:34:36.242246+00:00"
+      "created_at": "2026-10-12T21:34:36.242246+00:00",
+      "container_id": "18115751365957038"
     }
   },
   "replies": {
@@ -1083,5 +1084,5 @@
       "text_sha256": "ee6a10ec342569893050bc673de2eb48b2f92d250ce12ed98b7f88a0cd5ead3d"
     }
   },
-  "updated_at": "2026-10-12T21:34:36.242271+00:00"
+  "updated_at": "2026-10-12T21:34:41.941362+00:00"
 }
