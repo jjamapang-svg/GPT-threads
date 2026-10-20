@@ -836,7 +836,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/DesmDigCeea"
     },
     "87bb109ff129f8c270dcc7efa897f5ba4fa373b99aecb5c14ebf4d3e41c4693e": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "87bb109ff129f8c270dcc7efa897f5ba4fa373b99aecb5c14ebf4d3e41c4693e",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-20-13-87bb109ff129.png",
       "created_at": "2026-10-20T17:47:57.590483+00:00",
@@ -1345,5 +1345,5 @@
       "text_sha256": "87bb109ff129f8c270dcc7efa897f5ba4fa373b99aecb5c14ebf4d3e41c4693e"
     }
   },
-  "updated_at": "2026-10-20T17:48:03.351738+00:00"
+  "updated_at": "2026-10-20T17:48:04.489925+00:00"
 }
