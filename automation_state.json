@@ -834,6 +834,12 @@
       "container_id": "18117389176957038",
       "media_id": "18010957994995815",
       "permalink": "https://www.threads.com/@kim031476/post/DesmDigCeea"
+    },
+    "87bb109ff129f8c270dcc7efa897f5ba4fa373b99aecb5c14ebf4d3e41c4693e": {
+      "status": "reserved",
+      "text_sha256": "87bb109ff129f8c270dcc7efa897f5ba4fa373b99aecb5c14ebf4d3e41c4693e",
+      "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-20-13-87bb109ff129.png",
+      "created_at": "2026-10-20T17:47:57.590483+00:00"
     }
   },
   "replies": {
@@ -1332,7 +1338,11 @@
       "status": "posted",
       "text_sha256": "c77b4a3de0f0f6cd3dd67af92c94ed49383952a40e16306149a5c913af3a6f14",
       "permalink": "https://www.threads.com/@kim031476/post/DesmDigCeea"
+    },
+    "2026-10-20-13": {
+      "status": "reserved",
+      "text_sha256": "87bb109ff129f8c270dcc7efa897f5ba4fa373b99aecb5c14ebf4d3e41c4693e"
     }
   },
-  "updated_at": "2026-10-20T06:02:09.067131+00:00"
+  "updated_at": "2026-10-20T17:47:57.590507+00:00"
 }
