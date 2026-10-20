@@ -860,11 +860,12 @@
       "permalink": "https://www.threads.com/@kim031476/post/Dd11mY1j0m4"
     },
     "18030078734688407": {
-      "status": "reserved",
+      "status": "container_created",
       "reply_to_id": "18030078734688407",
       "reply_day": "2026-10-20",
       "text_sha256": "5d7cf3485392da1583802eee6d539c755172ae4326e61166a2584ecc796bdb72",
-      "created_at": "2026-10-20T06:01:55.650625+00:00"
+      "created_at": "2026-10-20T06:01:55.650625+00:00",
+      "container_id": "18117440749957038"
     }
   },
   "scheduled_slots": {
@@ -1332,5 +1333,5 @@
       "permalink": "https://www.threads.com/@kim031476/post/DesmDigCeea"
     }
   },
-  "updated_at": "2026-10-20T06:01:55.650647+00:00"
+  "updated_at": "2026-10-20T06:02:00.372969+00:00"
 }
