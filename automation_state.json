@@ -872,7 +872,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/DexsY-ImQWy"
     },
     "668ff2d1a4a08b9de525b4cd04c1c3a954c969ee48ee71e5e1740d62c4532eb2": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "668ff2d1a4a08b9de525b4cd04c1c3a954c969ee48ee71e5e1740d62c4532eb2",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-22-13-668ff2d1a4a0.png",
       "created_at": "2026-10-22T17:52:13.425131+00:00",
@@ -1401,5 +1401,5 @@
       "text_sha256": "668ff2d1a4a08b9de525b4cd04c1c3a954c969ee48ee71e5e1740d62c4532eb2"
     }
   },
-  "updated_at": "2026-10-22T17:52:20.048699+00:00"
+  "updated_at": "2026-10-22T17:52:22.432081+00:00"
 }
