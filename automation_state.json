@@ -926,7 +926,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/De43Kinj-_2"
     },
     "29aceb08bda72d37362056af8d2ed4d4cc66b5660edae7faece2721b7618f3b7": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "29aceb08bda72d37362056af8d2ed4d4cc66b5660edae7faece2721b7618f3b7",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-24-20-29aceb08bda7.png",
       "created_at": "2026-10-25T00:01:27.761392+00:00",
@@ -1494,5 +1494,5 @@
       "text_sha256": "29aceb08bda72d37362056af8d2ed4d4cc66b5660edae7faece2721b7618f3b7"
     }
   },
-  "updated_at": "2026-10-25T00:01:34.030965+00:00"
+  "updated_at": "2026-10-25T00:01:35.085373+00:00"
 }
