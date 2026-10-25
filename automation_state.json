@@ -933,6 +933,12 @@
       "container_id": "18118577836957038",
       "media_id": "18222874717349350",
       "permalink": "https://www.threads.com/@kim031476/post/De5X1ZDgAae"
+    },
+    "605a14e2967068f53aa94f61ef5ef00f37353f0d206d4bb3dd0104fec5e8741e": {
+      "status": "reserved",
+      "text_sha256": "605a14e2967068f53aa94f61ef5ef00f37353f0d206d4bb3dd0104fec5e8741e",
+      "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-10-25-12-605a14e29670.png",
+      "created_at": "2026-10-25T16:59:11.419085+00:00"
     }
   },
   "replies": {
@@ -1495,7 +1501,11 @@
       "status": "posted",
       "text_sha256": "29aceb08bda72d37362056af8d2ed4d4cc66b5660edae7faece2721b7618f3b7",
       "permalink": "https://www.threads.com/@kim031476/post/De5X1ZDgAae"
+    },
+    "2026-10-25-12": {
+      "status": "reserved",
+      "text_sha256": "605a14e2967068f53aa94f61ef5ef00f37353f0d206d4bb3dd0104fec5e8741e"
     }
   },
-  "updated_at": "2026-10-25T00:01:41.767682+00:00"
+  "updated_at": "2026-10-25T16:59:11.419107+00:00"
 }
