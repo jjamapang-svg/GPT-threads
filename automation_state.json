@@ -1212,7 +1212,7 @@
       "permalink": "https://www.threads.com/@kim031476/post/DficzZaj-Dp"
     },
     "74212fbaf04e0c0b86223a21847ec077dd65abaf4881330e825eeabf0aeb8bd1": {
-      "status": "container_created",
+      "status": "publishing",
       "text_sha256": "74212fbaf04e0c0b86223a21847ec077dd65abaf4881330e825eeabf0aeb8bd1",
       "image_url": "https://raw.githubusercontent.com/jjamapang-svg/GPT-threads/main/automation_media/2026-11-10-15-74212fbaf04e.png",
       "created_at": "2026-11-10T20:16:32.459582+00:00",
@@ -1956,5 +1956,5 @@
       "text_sha256": "74212fbaf04e0c0b86223a21847ec077dd65abaf4881330e825eeabf0aeb8bd1"
     }
   },
-  "updated_at": "2026-11-10T20:16:40.472806+00:00"
+  "updated_at": "2026-11-10T20:16:41.919177+00:00"
 }
